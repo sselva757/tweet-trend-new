@@ -8,12 +8,17 @@ environment {
   PATH = "/usr/share/maven/bin:$PATH"
 }
     stages {
-        stage('build') {
+        stage('clone repo') {
+            steps {
+	     git branch: 'main', url: 'https://github.com/sselva757/tweet-trend-new.git'
+            }
+        }
+    
+	 stage('build') {
             steps {
 	     sh 'mvn clean deploy'
             }
         }
-    }
     stage('SonarQube analysis') {
     environment {
      scannerHome = tool 'sonarscanner'
@@ -24,5 +29,6 @@ environment {
     }
     }
   }
+}
 }
 
